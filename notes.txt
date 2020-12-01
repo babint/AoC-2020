@@ -1,0 +1,9 @@
+---------------------------------------------------------
+Day 1
+---------------------------------------------------------
+Part I
+- Find two numbers from input that when summed equals 2020
+- Multiple those two numbers as an output
+
+Part II
+- Make it three numbers instead of two
