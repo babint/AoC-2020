@@ -17,12 +17,17 @@ with open(sys.argv[1]) as f:
 	for line in data:
 		# Parse line
 		pos1, pos2, letter, password = re.split('-| |: | ', line)
+		pos1 = int(pos1) - 1 # offset for 0 index
+		pos2 = int(pos2) - 1 # offset for 0 index
 		
 		# Check it only exists in one of those positions
-		if ((password[int(pos1)-1] == letter and password[int(pos2)-1] != letter)):
+		in_pos1 = bool(password[pos1] == letter)
+		in_pos2 = bool(password[pos2] == letter)
+		
+		# Xor Check
+		if (in_pos1 != in_pos2): 
 			valid_passwords += 1
-		elif ((password[int(pos1)-1] != letter and password[int(pos2)-1] == letter)):
-			valid_passwords += 1
+		
 
 # Answer
 print(f"{valid_passwords}");
