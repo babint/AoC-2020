@@ -15,8 +15,20 @@ Day 2
 Part I
 - List of of passwords and some of them don't follow policy
 - Format is <min>-<max> <char> <password> 
---- Character must appear in the password at minimun <min> times and maximum <max> of times
+--- Character must appear in the password at minimum <min> times and maximum <max> of times
 
 Part II
 - Format <pos1>-<pos2> <char> <password>
 -- the character must exist in position 1, and not position 2 in the password
+
+
+---------------------------------------------------------
+Day 3
+---------------------------------------------------------
+Part I
+- .=open #=tree
+- Given a map that will repeat horizontally
+- Calculate the number of trees given a slope (x,y) movements
+
+Part II
+- Calculation tree collusions for a list of slopes
