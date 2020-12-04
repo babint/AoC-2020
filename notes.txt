@@ -32,3 +32,15 @@ Part I
 
 Part II
 - Calculation tree collusions for a list of slopes
+
+---------------------------------------------------------
+Day 4
+---------------------------------------------------------
+Part I
+- detecting which passports have all required fields
+- key:value pairs seperated by spaces or newline
+- Passports are seperated by blank lines
+- cid not required
+
+Part II
+- Validation Rules by field now
