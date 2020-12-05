@@ -43,25 +43,6 @@ fields = {
 	'cid': {'type':'string', 'required':False},
 }
 
-def loadPassportsold():
-	with open(sys.argv[1]) as f:
-		data = f.read().splitlines()
-		counter = 0
-		passport = {}
-		for i, line in enumerate(data):		
-
-			# new password line
-			if (not line):
-				passports.append(passport) 
-				passport = {}
-				counter += 1
-				continue
-
-			attirubtes = line.split()
-			for attr in attirubtes:
-				attr_data = attr.split(':')
-				passport[attr_data[0]] = attr_data[1]
-
 def loadPassports():
 	with open(sys.argv[1]) as f:
 		data = re.split('\n\n', f.read())
