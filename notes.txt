@@ -44,3 +44,22 @@ Part I
 
 Part II
 - Validation Rules by field now
+
+
+---------------------------------------------------------
+Day 5
+---------------------------------------------------------
+Part I
+- list of all boarding pass codes near you and figure out what seat isn't taken
+--- F:front B:back L:left R:right
+--- first 7 chars will just be F or B 
+--- 128 rows on the plane (0-127)
+--- 8 columns (0-7)
+- FBFBBFFRLR ==> FBFBBFF for rows and RLR for columns
+-- Cutting each one in half eveyr time a choice is made
+-- Start:(0-127) => F:(0-63) => B:(32-63) => F:(62-47) => B:(40-47) => B:(44-47) => F(44-45) => F(44)
+-- Start(0-7) => R:(4-7) => L:(4-5) => R(5)
+-- row:44 col:5 ==> row * 8 * col == seat number ==> 357
+
+Part II
+- Sold out flight so find missing seat by process of elimination of missing ids from your seat
