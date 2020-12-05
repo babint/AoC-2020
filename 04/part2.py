@@ -6,18 +6,44 @@ import re
 passports = []
 valid_passports = 0
 
+
+def is_required(attr):
+	return bool(fields[attr]['required'])
+
+def has_rule(attr, rule):
+	if not (attr in fields.keys()): return False
+	if not (rule in fields[attr].keys()): return False
+	return True
+
+def get_rule(attr, rule):
+ 	return fields[attr][rule]
+
+def check_height(attr, value):
+	hgt_type = value[-2:len(value)]
+	hgt_value = value[0:-2]			
+	if not (hgt_type in ['cm', 'in']): 
+		return False
+	if (hgt_type == 'cm' and not int(hgt_value) in range(150, 194)):				
+		return False
+	elif (hgt_type == 'in' and not int(hgt_value) in range(59, 77)):
+		return False
+
+	# height ok 
+	return True
+
+# Validation Rules	
 fields = {
-	'byr': {'required':True},
-	'iyr': {'required':True},
-	'eyr': {'required':True},
-	'hgt': {'required':True},
-	'hcl': {'required':True},
-	'ecl': {'required':True},
-	'pid': {'required':True},
-	'cid': {'required':False},
+	'byr': {'type':'integer', 'required':True, 'min':1920, 'max':2002},
+	'iyr': {'type':'integer', 'required':True, 'min':2010, 'max':2021},
+	'eyr': {'type':'integer', 'required':True, 'min':2020, 'max':2031},
+	'hgt': {'type':'string', 'required':True, 'call':check_height},
+	'hcl': {'type':'string', 'required':True, 'match':'^#[a-z0-9]{6}$'},
+	'ecl': {'type':'integer', 'required':True, 'in_list': ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']},
+	'pid': {'type':'integer', 'required':True, 'match':'^[0-9]{9}$'},
+	'cid': {'type':'string', 'required':False},
 }
 
-def loadPassports():
+def loadPassportsold():
 	with open(sys.argv[1]) as f:
 		data = f.read().splitlines()
 		counter = 0
@@ -35,62 +61,47 @@ def loadPassports():
 			for attr in attirubtes:
 				attr_data = attr.split(':')
 				passport[attr_data[0]] = attr_data[1]
-		
-		# Add last one
-		passports.append(passport) 
 
-	
+def loadPassports():
+	with open(sys.argv[1]) as f:
+		data = re.split('\n\n', f.read())
+		
+		for group in data:
+			passport = {}
+			for attrvalues in re.split(' |\n', group):
+				attr, value = attrvalues.split(':')
+				passport[attr] = value
+			
+			# Add Parsed Password
+			passports.append(passport) 	
 # Usage
 if len(sys.argv) != 2:
 	print("usage: part2.py input.txt")
 	exit(1)
-
-
-
 
 loadPassports()
 
 # Validate Passports
 for passport in passports:
 	valid = True
+
 	for attr in fields:
-		is_attr_valid = True
-		is_required = fields[attr]['required']
-		
-		# If a require field is not set, skip
-		if (is_required and not (attr in passport.keys())):
+		# Check value against rules
+		try:
+			value = passport.get(attr,'-1')
+			if (is_required(attr) and not (attr in passport.keys())): valid = False
+			if (has_rule(attr, 'min') and not (int(value) >= fields[attr]['min'])): valid = False
+			if (has_rule(attr, 'max') and not (int(value) <= fields[attr]['max'])): valid = False
+			if (has_rule(attr, 'match') and not (re.match(get_rule(attr, 'match'), value))): valid = False
+			if (has_rule(attr, 'in_list') and not (value in get_rule(attr, 'in_list'))): valid = False
+			if (has_rule(attr, 'call') and not(get_rule(attr, 'call')(attr, value))): valid = False
+		except Exception as e:
+			print(e)
 			valid = False
-			continue
+	
 
-		# Validate the columns by type
-		value = passport.get(attr,'')
-		if (attr == 'byr' and not int(value) in range(1920, 2003)): 
-			is_attr_valid = False
-		elif (attr == 'iyr' and not int(value) in range(2010, 2021)): 
-			is_attr_valid = False
-		elif (attr == 'eyr' and not int(value) in range(2020, 2031)): 
-			is_attr_valid = False
-		elif (attr == 'hgt'): 
-			hgt_type = value[-2:len(value)]
-			hgt_value = value[0:-2]			
-			if not (hgt_type in ['cm', 'in']): 
-				is_attr_valid = False
-			if (hgt_type == 'cm' and not int(hgt_value) in range(150, 194)):				
-				is_attr_valid = False
-			elif (hgt_type == 'in' and not int(hgt_value) in range(59, 77)):
-				is_attr_valid = False
-		elif (attr == 'hcl') and (len(value) != 7 or not re.match('^#[a-z0-9]+$', value)):
-				is_attr_valid = False
-		elif (attr == 'ecl' and not value in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']): 
-			is_attr_valid = False
-		elif (attr == 'pid' and not re.match('^[0-9]{9}$', value)): 
-			is_attr_valid = False
-
-		if not (is_attr_valid):
-			valid = False
-
-	# Valid passpost		
-	if (valid): 
+	# Process Valid Passwords		
+	if (valid):
 		valid_passports +=1
 
 	
