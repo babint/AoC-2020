@@ -28,7 +28,7 @@ def calculate_seat(instructions):
 	seat = {
 		'id': caluate_id(plane_rows[0], plane_col[0]),
 		'row': plane_rows[0],
-		'col': plane_rows[0]
+		'col': plane_col[0]
 	}
 
 	return seat
