@@ -4,31 +4,36 @@ import sys
 import re
 
 seats = []
+
+rows = 128
+cols = 8
+
 def caluate_id(row, col):
 	return (row) * 8 + (col)
 
-def calculate_seat(instructions):
-	plane_rows = list(range(0, 128))
-	plane_col =  list(range(0, 8))
-	
+def calculate_seat(instructions, rows, cols):
+	# Seat set 
+	plane_rows = list(range(0, rows))
+	plane_cols =  list(range(0, cols))
+
+	# halve the seat set based on instruction
 	for instr in instructions:
-		#print(f"row: {plane_rows}  col: {plane_col}")
 		if (instr == 'F'):
 			plane_rows = plane_rows[:len(plane_rows)//2]
 		elif(instr == 'B'):
 			plane_rows = plane_rows[(len(plane_rows)//2):]
 		elif(instr == 'L'):
-			plane_col = plane_col[:(len(plane_col)//2)]
+			plane_cols = plane_cols[:(len(plane_cols)//2)]
 		elif(instr == 'R'):
-			plane_col = plane_col[(len(plane_col)//2):]
+			plane_cols = plane_cols[(len(plane_cols)//2):]
 		else: 
 			print(f'bad instruction: {instr}')
 
-	# Build Seat
+	# Build Seat data from whats left 
 	seat = {
-		'id': caluate_id(plane_rows[0], plane_col[0]),
+		'id': caluate_id(plane_rows[0], plane_cols[0]),
 		'row': plane_rows[0],
-		'col': plane_col[0]
+		'col': plane_cols[0]
 	}
 
 	return seat
@@ -39,12 +44,12 @@ if len(sys.argv) != 2:
 	print("usage: part2.py input.txt")
 	exit(1)
 
-# Read File + Get Seat
+# Read File + Calculate Seat
 with open(sys.argv[1]) as f:
 	line = f.read().splitlines()
 	for instructions in line:
-		seat = calculate_seat(instructions)
-		seats.append(int(seat['id']))		# Track seat and ids
+		seat = calculate_seat(instructions, rows, cols)
+		seats.append(int(seat['id'])) # Track seat and ids
 
 
 # Find missing Seat id
