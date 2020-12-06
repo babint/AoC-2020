@@ -63,3 +63,22 @@ Part I
 
 Part II
 - Sold out flight so find missing seat by process of elimination of missing ids from your seat
+
+
+---------------------------------------------------------
+Day 6
+---------------------------------------------------------
+- list of all answers per person a-z, each character means they answered 'yes' to that question out of 26 possible questions
+- Groups seperate by blank line, people seperated by new line
+- For each group how many questions did they answer yes to. 
+--- abc ==> 3 because a single person of one group and so all answers match
+--- all a's => 1
+--- a, or b, or c ==> 3 since they had 3 different questions they all said yes to. 
+
+
+Part II
+- Sum all the questions per group they agreed to 
+--- abc ==> 3 because a single person of one group and so all answers match
+--- all a's => 1
+--- a, or b, or c ==> 0 since they could not agree on any questions 
+
