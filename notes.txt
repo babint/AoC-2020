@@ -82,3 +82,24 @@ Part II
 --- all a's => 1
 --- a, or b, or c ==> 0 since they could not agree on any questions 
 
+---------------------------------------------------------
+Day 7
+---------------------------------------------------------
+Part I
+- each line is a bag color and what (and how many) bags it can contain
+- determine how much of the bags can contain a 'shiny gold' bag
+
+Part II
+- given a shiny gold back how many bags does it contain
+
+---------------------------------------------------------
+Day 8
+---------------------------------------------------------
+Part I
+- acc adjust accumulator by the vaglue given ==> acc +7 would go from 0 to 6, and executes that next command
+- jmp humps to a new intruction (relative to itself) ==> jmp +2 would skip over 1
+- nop is no operation, instruction below it runs. 
+
+Part II
+- 
+-
