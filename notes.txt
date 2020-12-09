@@ -101,5 +101,18 @@ Part I
 - nop is no operation, instruction below it runs. 
 
 Part II
-- 
--
+- swaping a single instructions (nop|jmp) with another (jmp|nop) will let the program execute till the end, figure out what the value of the accumulator is when its runs without error
+
+
+---------------------------------------------------------
+--- Day 9: Encoding Error ---
+---------------------------------------------------------
+Part I
+- given encrpyted data
+--- preamble: 25 chars
+--- next number must be the sum of two numbers in the preamble
+--- moving to the next number changes the preamble (take number you checked, add to preamble, drop off first)
+- find the first invalid number
+
+Part II
+- find contigious subset sum that matches invalid number, return min/max values of set
