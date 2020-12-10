@@ -2,7 +2,7 @@
 
 import sys, re, copy
 
-adaptars = []
+adapters = []
 current_volts = 0
 differences = {
 	0:0,
@@ -13,21 +13,21 @@ differences = {
 
 # Usage
 if len(sys.argv) != 2:
-	print("usage: part1.py input.txt")
+	print("usage: part2.py input.txt")
 	exit(1)
 
 # Load input
 with open(sys.argv[1]) as f:
 	data = f.read().splitlines()
 	for i, line in enumerate(data):
-		adaptars.append(int(line))
+		adapters.append(int(line))
 
 # Start
-adaptars.sort()
-for i in range(len(adaptars)):
-	diff = adaptars[i] - current_volts 
+adapters.sort()
+for i in range(len(adapters)):
+	diff = adapters[i] - current_volts 
 	differences[diff] += 1
-	current_volts = adaptars[i]
+	current_volts = adapters[i]
 
 differences[3]+=1
 
